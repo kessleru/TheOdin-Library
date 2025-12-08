@@ -94,10 +94,9 @@ header h1 {
 }
 
 .my-books button p {
- font: 700 1rem 'IBM Plex Sans';
- color: #f6f1e9;
+  font: 700 1rem 'IBM Plex Sans';
+  color: #f6f1e9;
 }
-
 
 /* list-books */
 .list-books {
@@ -179,7 +178,7 @@ header h1 {
 }
 
 .book-title h2 {
-  font: 500 0.95rem 'IBM Plex Sans';
+  font: 500 0.95rem 'Fira Mono';
   letter-spacing: 0.05rem;
   color: #4a4540;
 }
@@ -190,7 +189,7 @@ header h1 {
 }
 
 .book-author h2 {
-  font: 400 0.85rem 'IBM Plex Sans';
+  font: 500 0.85rem 'Fira Mono';
   color: #8b7d6b;
 }
 
@@ -210,4 +209,62 @@ header h1 {
 .book-info img:hover {
   background: #4a454010;
   border-radius: 50%;
+}
+
+/* Modal */
+.modal-container {
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: #f6f1e9;
+  min-height: 300px;
+  min-width: 300px;
+  width: 50vw;
+  max-width: 680px;
+  padding: 15px 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 10px #f6f1e9;
+  position: relative;
+}
+
+.fechar {
+  border: none;
+  background: none;
+  padding: 10px;
+  top: 15px;
+  right: 10px;
+  position: absolute;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url('../img/fechar.svg') no-repeat center center;
+  background-size: contain;
+}
+
+.modal h1 {
+  font: 700 1.5rem 'IBM Plex Sans';
+  color: #4a4540;
+  margin-bottom: 5px;
+}
+
+.modal p {
+  font: 400 1rem 'IBM Plex Sans';
+  color: #7c756c;
+  margin-bottom: 20px;
+}
+
+.modal form {
+  padding-top: 20px;
+  border-top: 1px solid #7c756c50;
 }
