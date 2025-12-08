@@ -226,12 +226,15 @@ header h1 {
   align-items: center;
 }
 
+.modal-container.ativo {
+  display: flex;
+}
+
 .modal {
   background: #f6f1e9;
-  min-height: 300px;
-  min-width: 300px;
-  width: 50vw;
-  max-width: 680px;
+  min-height: 220px;
+  width: 55%;
+  max-width: 360px;
   padding: 15px 10px;
   border-radius: 10px;
   box-shadow: 0 0 0 10px #f6f1e9;
@@ -242,7 +245,7 @@ header h1 {
   border: none;
   background: none;
   padding: 10px;
-  top: 15px;
+  top: 10px;
   right: 10px;
   position: absolute;
   cursor: pointer;
@@ -267,4 +270,40 @@ header h1 {
 .modal form {
   padding-top: 20px;
   border-top: 1px solid #7c756c50;
+  display: grid;
+  grid-template-columns: 1fr 50px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal label {
+  display: block;
+  font: 400 1rem 'IBM Plex Sans';
+  color: #7c756c;
+}
+
+.modal input {
+  border: 2px solid #7c756c50;
+  border-radius: 5px;
+  background: #ebe8e3;
+  padding: 5px;
+}
+
+.modal form button {
+  justify-self: flex-end;
+  align-self: flex-end;
+  background: #ccad7a;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.modal input:focus {
+  border: 2px solid #ccad7a;
+  outline: none;
 }

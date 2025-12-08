@@ -33,7 +33,7 @@
       <main>
         <section class="my-books">
           <h1>My Books</h1>
-          <button class="add-book">
+          <button class="add-book" data-modal="abrir">
             <img src="img/add.svg" alt="Adicionar" />
             <p>Add Book</p>
           </button>
@@ -62,7 +62,9 @@
                   <h2>JENNIFER LYNN BARNES</h2>
                 </div>
                 <div class="book-info">
-                  <a href=""><img src="img/info.svg" alt="info de um livro"></a>
+                  <a href=""
+                    ><img src="img/info.svg" alt="info de um livro"
+                  /></a>
                 </div>
               </li>
             </ul>
@@ -77,11 +79,17 @@
         <p>Fill in the fields below to add a book.</p>
         <button data-modal="fechar" class="fechar"></button>
         <form action="">
-          <label for="title">Title</label>
-          <input type="text" name="title" id="title">
-          <label for="author">Author</label>
-          <input type="text" name="author" id="author">
-          <button type="submit">Add</button>
+          <div class="inputs">
+            <div>
+              <label for="title">Title</label>
+              <input type="text" name="title" id="title" />
+            </div>
+            <div>
+              <label for="author">Author</label>
+              <input type="text" name="author" id="author" />
+            </div>
+          </div>
+          <button type="submit"><img src="img/add.svg" alt="Adicionar" /></button>
         </form>
       </div>
     </section>
