@@ -150,7 +150,7 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 10px 10px;
+  padding: 10px;
   background: #f6f1e9;
   border-radius: 20px;
   transition: all 0.3s ease;
@@ -353,7 +353,7 @@ header h1 {
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 715px) {
   .cabecalho {
     display: none;
   }
@@ -445,4 +445,3 @@ header h1 {
     align-items: flex-start;
   }
 }
-
