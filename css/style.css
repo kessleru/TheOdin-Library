@@ -3,6 +3,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --motion-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --motion-duration-fast: 140ms;
+  --motion-duration: 220ms;
+  --motion-duration-slow: 360ms;
+}
+
 body {
   margin: 0px;
   background-color: #f6f1e9;
@@ -42,6 +50,18 @@ img {
   padding-right: 30px;
   margin-left: auto;
   margin-right: auto;
+  animation: page-in var(--motion-duration-slow) var(--motion-ease-out) both;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* header */
@@ -85,12 +105,21 @@ header h1 {
   border: none;
   border-radius: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transform: translateY(0);
+  transition: transform var(--motion-duration) var(--motion-ease-out),
+    box-shadow var(--motion-duration) var(--motion-ease-out),
+    filter var(--motion-duration) var(--motion-ease-out);
+  will-change: transform;
 }
 
 .my-books button:hover {
   transform: translateY(-1.5px);
   box-shadow: 2px 4px 10px rgba(74, 69, 64, 0.1);
+}
+
+.my-books button:active {
+  transform: translateY(0) scale(0.98);
+  filter: brightness(0.98);
 }
 
 .my-books button p {
@@ -153,11 +182,38 @@ header h1 {
   padding: 10px;
   background: #f6f1e9;
   border-radius: 20px;
-  transition: all 0.3s ease;
+  transform: translateY(0);
+  transition: transform var(--motion-duration) var(--motion-ease-out),
+    background var(--motion-duration) var(--motion-ease-out),
+    box-shadow var(--motion-duration) var(--motion-ease-out),
+    opacity var(--motion-duration) var(--motion-ease-out);
+  will-change: transform, opacity;
 }
 
 .book-item:hover {
   background: #ebe8e3;
+  transform: translateY(-1px);
+  box-shadow: 2px 4px 10px rgba(74, 69, 64, 0.06);
+}
+
+@keyframes item-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.book-item.is-entering {
+  animation: item-pop-in var(--motion-duration-slow) var(--motion-ease-out) both;
+}
+
+.book-item.is-removing {
+  opacity: 0;
+  transform: translateX(8px);
 }
 
 .book-cover {
@@ -170,6 +226,13 @@ header h1 {
   object-fit: cover;
   border-radius: 10%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform var(--motion-duration) var(--motion-ease-out),
+    box-shadow var(--motion-duration) var(--motion-ease-out);
+}
+
+.book-item:hover .book-cover img {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
 }
 
 .book-title {
@@ -200,6 +263,31 @@ header h1 {
   cursor: pointer;
   min-width: 70px;
   text-align: center;
+  transform: translateY(0);
+  transition: transform var(--motion-duration-fast) var(--motion-ease-out);
+  will-change: transform;
+}
+
+.book-read:active,
+.book-unread:active {
+  transform: scale(0.98);
+}
+
+@keyframes chip-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.book-read.is-toggling,
+.book-unread.is-toggling {
+  animation: chip-pulse var(--motion-duration) var(--motion-ease-out);
 }
 
 .book-read {
@@ -217,11 +305,19 @@ header h1 {
   align-items: center;
   justify-content: center;
   opacity: 0.6;
-  transition: opacity 0.3s ease;
+  transform: translateY(0);
+  transition: opacity var(--motion-duration) var(--motion-ease-out),
+    transform var(--motion-duration) var(--motion-ease-out);
+  will-change: transform;
 }
 
 .book-delete:hover {
   opacity: 1;
+  transform: translateY(-1px);
+}
+
+.book-delete:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .book-delete img {
@@ -246,13 +342,22 @@ header h1 {
   top: 0;
   left: 0;
   z-index: 2000;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--motion-duration) var(--motion-ease-out),
+    visibility 0s linear var(--motion-duration);
 }
 
 .modal-container.ativo {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity var(--motion-duration) var(--motion-ease-out),
+    visibility 0s linear 0s;
 }
 
 .modal {
@@ -264,6 +369,16 @@ header h1 {
   border-radius: 10px;
   box-shadow: 0 0 0 10px #f6f1e9;
   position: relative;
+  opacity: 0;
+  transform: translateY(10px) scale(0.985);
+  transition: transform var(--motion-duration) var(--motion-ease-out),
+    opacity var(--motion-duration) var(--motion-ease-out);
+  will-change: transform, opacity;
+}
+
+.modal-container.ativo .modal {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .fechar {
@@ -278,6 +393,18 @@ header h1 {
   height: 20px;
   background: url('../img/fechar.svg') no-repeat center center;
   background-size: contain;
+  transform: translateY(0);
+  transition: transform var(--motion-duration) var(--motion-ease-out),
+    opacity var(--motion-duration) var(--motion-ease-out);
+}
+
+.fechar:hover {
+  transform: translateY(-1px);
+  opacity: 0.85;
+}
+
+.fechar:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .modal h1 {
@@ -326,6 +453,38 @@ header h1 {
   border-radius: 50%;
   cursor: pointer;
   padding: 10px;
+  transform: translateY(0);
+  transition: transform var(--motion-duration) var(--motion-ease-out),
+    filter var(--motion-duration) var(--motion-ease-out),
+    box-shadow var(--motion-duration) var(--motion-ease-out);
+  will-change: transform;
+}
+
+.modal form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 2px 4px 10px rgba(74, 69, 64, 0.1);
+}
+
+.modal form button:active {
+  transform: translateY(0) scale(0.98);
+  filter: brightness(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .my-books button,
+  .book-item,
+  .book-cover img,
+  .book-read,
+  .book-unread,
+  .book-delete,
+  .modal-container,
+  .modal,
+  .fechar,
+  .modal form button {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 .modal input:focus {

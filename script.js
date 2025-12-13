@@ -56,21 +56,55 @@ function addBookToLibrary(title, author, read) {
 
 function toggleReadStatus(book, readStatus) {
   book.toggleRead();
-  readStatus.className = book.read ? 'book-read' : 'book-unread';
+  readStatus.classList.toggle('book-read', book.read);
+  readStatus.classList.toggle('book-unread', !book.read);
   readStatus.innerHTML = `<p>${book.read ? 'Read' : 'Unread'}</p>`;
+  readStatus.classList.remove('is-toggling');
+  // Force restart of animation when toggling repeatedly
+  void readStatus.offsetWidth;
+  readStatus.classList.add('is-toggling');
+  readStatus.addEventListener(
+    'animationend',
+    () => readStatus.classList.remove('is-toggling'),
+    { once: true }
+  );
 }
 
 function deleteBook(book, bookItem) {
-  const index = myLibrary.indexOf(book);
-  if (index > -1) {
-    myLibrary.splice(index, 1);
+  bookItem.classList.add('is-removing');
+
+  const onDone = () => {
+    const index = myLibrary.indexOf(book);
+    if (index > -1) {
+      myLibrary.splice(index, 1);
+    }
+    bookItem.remove();
+  };
+
+  // If transitions are disabled (e.g. prefers-reduced-motion), remove immediately.
+  const styles = window.getComputedStyle(bookItem);
+  const duration =
+    parseFloat(styles.transitionDuration) ||
+    parseFloat((styles.transitionDuration || '0').split(',')[0]) ||
+    0;
+
+  if (!duration) {
+    onDone();
+    return;
   }
-  bookItem.remove();
+
+  bookItem.addEventListener('transitionend', onDone, { once: true });
 }
 
 function displayBook(book) {
   const bookItem = document.createElement('li');
   bookItem.classList.add('book-item');
+  bookItem.classList.add('is-entering');
+  bookItem.addEventListener(
+    'animationend',
+    () => bookItem.classList.remove('is-entering'),
+    { once: true }
+  );
 
   const cover = document.createElement('div');
   cover.classList.add('book-cover');
