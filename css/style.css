@@ -198,6 +198,7 @@ header h1 {
 .book-unread {
   font: 500 0.85rem 'Fira Mono';
   cursor: pointer;
+  user-select: none;
   min-width: 70px;
   text-align: center;
 }
